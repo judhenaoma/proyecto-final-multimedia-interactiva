@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sketch</title>
+
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+    <!-- <script src="http://unpkg.com/tone"></script> -->
+  </head>
+
+  <body>
+    <script>
+        function intensityFromCam(objectArrLength, fingers){
+          let intensity = 0;
+          switch (fingers) {
+            case 0:
+              intensity = 0;
+              break;
+            case 1:
+              intensity = Math.floor(0.1 * objectArrLength);
+              break;
+            case 2:
+              intensity = Math.floor(0.3 * objectArrLength);
+              break;
+            case 3:
+              intensity = Math.floor(0.6 * objectArrLength);
+              break;
+            case 4:
+              intensity = Math.floor(0.8 * objectArrLength);
+              break;
+            case 5:
+              intensity = objectArrLength
+              break;
+            default:
+              intensity =  Math.floor(0.2 * objectArrLength);
+              break;
+            
+  }
+          return intensity;
+  }
+      var socket = new WebSocket('ws://127.0.0.1:8000/ws');
+      var intensities = [0];
+      // Socket setup
+      socket.addEventListener('open', () => {
+        console.log('WebSocket opend');
+        socket.send('Primer handshake');
+      });
+
+      socket.addEventListener('message', (event) => {
+      const message = event.data;
+      let fingers = parseInt(message);
+      let intensity = intensityFromCam(990, fingers);
+      intensities.push(intensity);
+    });
+    </script>
+    <script src="sketch.js"></script>
+  </body>
+</html>
