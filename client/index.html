@@ -14,6 +14,7 @@
   </head>
 
   <body>
+
     <div id="particles-js"></div>
     <div id="moon"></div>
     <div id="ground"></div>
@@ -75,7 +76,7 @@
 
       socket.addEventListener('message', (event) => {
       const message = event.data;
-      let fingers = parseInt(message);
+      var fingers = parseInt(message);
       let intensity = intensityFromCam(990, fingers);
       intensities.push(intensity);
     });

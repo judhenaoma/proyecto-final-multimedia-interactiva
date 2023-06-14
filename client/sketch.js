@@ -126,6 +126,7 @@ function setup() {
     fireButton.addEventListener('click', () => {
       fireOn = !fireOn;
       if(fireOn){
+        
         fireSong.loop();
         fireSong.play();
         fireSong.setVolume(1);
@@ -178,13 +179,21 @@ function draw() {
       drops[i].show();
     }
   }
-  
+  const flame = document.querySelector('.fireplace__flame');
+  const flame_big = document.querySelector('.fireplace__flame_big');
   //Animate Fire
   if(fireOn){
     for (let i = 0; i < intensities[intensities.length - 1]; i++) {
       fire[i].update();
       fire[i].show();
     }
+    new_width = `${Math.floor(intensities[intensities.length - 1]*0.2)}px`;
+    new_height = `${Math.floor(intensities[intensities.length - 1]*0.5)}px`;
+    flame.style.setProperty('width', new_width);
+    flame.style.setProperty('height', new_height);
+    flame_big.style.setProperty('width', new_width);
+    flame_big.style.setProperty('height', new_height);
+
   }
 
   //Amimate Thunder
@@ -289,6 +298,7 @@ class Fire {
     ellipse(this.x, this.y, this.size, this.size);
   }
 }
+
 
 //draws stars
 particlesJS("particles-js", {
@@ -401,3 +411,4 @@ particlesJS("particles-js", {
   },
   "retina_detect": true
 });
+
